@@ -26,17 +26,65 @@ class Options {
       'isRequired' => false,
       'type' => TType::STRING,
       ),
+    2 => array(
+      'var' => 'traceId',
+      'isRequired' => false,
+      'type' => TType::STRING,
+      ),
+    3 => array(
+      'var' => 'parentSpanId',
+      'isRequired' => false,
+      'type' => TType::STRING,
+      ),
+    4 => array(
+      'var' => 'spanId',
+      'isRequired' => false,
+      'type' => TType::STRING,
+      ),
+    5 => array(
+      'var' => 'sampled',
+      'isRequired' => false,
+      'type' => TType::STRING,
+      ),
     );
 
   /**
    * @var string
    */
   public $span = null;
+  /**
+   * @var string
+   */
+  public $traceId = null;
+  /**
+   * @var string
+   */
+  public $parentSpanId = null;
+  /**
+   * @var string
+   */
+  public $spanId = null;
+  /**
+   * @var string
+   */
+  public $sampled = null;
 
   public function __construct($vals=null) {
     if (is_array($vals)) {
       if (isset($vals['span'])) {
         $this->span = $vals['span'];
+      }
+      if (isset($vals['traceId'])) {
+        $this->traceId = $vals['traceId'];
+      }
+      if (isset($vals['parentSpanId'])) {
+        $this->parentSpanId = $vals['parentSpanId'];
+      }
+      if (isset($vals['spanId'])) {
+        $this->spanId = $vals['spanId'];
+      }
+      if (isset($vals['sampled'])) {
+        $this->sampled = $vals['sampled'];
       }
     }
   }
@@ -67,6 +115,34 @@ class Options {
             $xfer += $input->skip($ftype);
           }
           break;
+        case 2:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->traceId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 3:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->parentSpanId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 4:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->spanId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 5:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->sampled);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -83,6 +159,26 @@ class Options {
     if ($this->span !== null) {
       $xfer += $output->writeFieldBegin('span', TType::STRING, 1);
       $xfer += $output->writeString($this->span);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->traceId !== null) {
+      $xfer += $output->writeFieldBegin('traceId', TType::STRING, 2);
+      $xfer += $output->writeString($this->traceId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->parentSpanId !== null) {
+      $xfer += $output->writeFieldBegin('parentSpanId', TType::STRING, 3);
+      $xfer += $output->writeString($this->parentSpanId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->spanId !== null) {
+      $xfer += $output->writeFieldBegin('spanId', TType::STRING, 4);
+      $xfer += $output->writeString($this->spanId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->sampled !== null) {
+      $xfer += $output->writeFieldBegin('sampled', TType::STRING, 5);
+      $xfer += $output->writeString($this->sampled);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

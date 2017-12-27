@@ -6,6 +6,7 @@ use App\Tasks\Task;
 use App\Thrift\Clients\AppClient;
 use App\Thrift\Clients\ZipkinClient;
 use Xin\Cli\Color;
+use Zipkin\Tracer;
 
 class TestTask extends Task
 {
@@ -28,9 +29,7 @@ class TestTask extends Task
     public function zipkinAction()
     {
         $client = ZipkinClient::getInstance();
-        for ($i = 0; $i < 100; $i++) {
-            dump($client->version());
-        }
+        echo $client->test();
     }
 
     public function numAction()

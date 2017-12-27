@@ -8,17 +8,24 @@
 // +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
+use App\Biz\Zipkin;
+use App\Thrift\Clients\ZipkinClient;
 use Xin\Thrift\ZipkinService\ZipkinIf;
 use Xin\Thrift\ZipkinService\ZipkinException;
 use Xin\Thrift\ZipkinService\Options;
+use Zipkin\Tracer;
 
 class ZipkinHandler extends Handler implements ZipkinIf
 {
     public function version(Options $options)
     {
-        $span = $options->span;
-        dump($span);
         return $this->config->version;
     }
 
+    public function test(Options $options)
+    {
+        $client = ZipkinClient::getInstance();
+        $version = $client->version($options);
+        return $version;
+    }
 }

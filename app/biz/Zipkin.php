@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace App\Biz;
 
+use Xin\Thrift\MicroService\Options;
 use Xin\Traits\Common\InstanceTrait;
 
 class Zipkin
@@ -19,5 +20,10 @@ class Zipkin
     public function instanceCount()
     {
         return count(static::$_instances);
+    }
+
+    public function handle(Options $options)
+    {
+
     }
 }
