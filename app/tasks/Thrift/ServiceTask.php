@@ -36,6 +36,8 @@ class ServiceTask extends Socket
 
     protected $processor;
 
+    protected $kick = 0;
+
     protected function events()
     {
         return [
@@ -122,6 +124,8 @@ class ServiceTask extends Socket
 
     public function receive(swoole_server $server, $fd, $reactor_id, $data)
     {
+        // echo $this->kick++ . PHP_EOL;
+
         $transport = new TMemoryBuffer($data);
         $protocol = new TBinaryProtocol($transport);
         $transport->open();

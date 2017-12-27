@@ -105,4 +105,66 @@ class AppProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_num($seqid, $input, $output) {
+    $bin_accel = ($input instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary_after_message_begin');
+    if ($bin_accel)
+    {
+      $args = thrift_protocol_read_binary_after_message_begin($input, '\Xin\Thrift\MicroService\App_num_args', $input->isStrictRead());
+    }
+    else
+    {
+      $args = new \Xin\Thrift\MicroService\App_num_args();
+      $args->read($input);
+      $input->readMessageEnd();
+    }
+    $result = new \Xin\Thrift\MicroService\App_num_result();
+    try {
+      $result->success = $this->handler_->num();
+    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'num', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('num', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+  protected function process_redis($seqid, $input, $output) {
+    $bin_accel = ($input instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary_after_message_begin');
+    if ($bin_accel)
+    {
+      $args = thrift_protocol_read_binary_after_message_begin($input, '\Xin\Thrift\MicroService\App_redis_args', $input->isStrictRead());
+    }
+    else
+    {
+      $args = new \Xin\Thrift\MicroService\App_redis_args();
+      $args->read($input);
+      $input->readMessageEnd();
+    }
+    $result = new \Xin\Thrift\MicroService\App_redis_result();
+    try {
+      $this->handler_->redis();
+    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'redis', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('redis', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
 }

@@ -12,4 +12,10 @@ service App {
 
     // 测试异常抛出
     string testException() throws(1:ThriftException ex)
+
+    // 测试内存自增
+    string num() throws (1:ThriftException ex)
+
+    // 判断redis db切换操作
+    void redis() throws (1:ThriftException ex)
 }

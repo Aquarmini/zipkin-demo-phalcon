@@ -8,6 +8,8 @@
 // +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
+use App\Biz\Test;
+use App\Utils\Redis;
 use Xin\Thrift\MicroService\AppIf;
 use Xin\Thrift\MicroService\ThriftException;
 
@@ -35,5 +37,16 @@ class AppHandler extends Handler implements AppIf
             'code' => '400',
             'message' => '异常测试'
         ]);
+    }
+
+    public function num()
+    {
+        return Test::getInstance()->num();
+    }
+
+    public function redis()
+    {
+        Redis::set('1', '1');
+        Redis::select(2);
     }
 }

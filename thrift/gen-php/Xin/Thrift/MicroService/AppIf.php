@@ -27,6 +27,15 @@ interface AppIf {
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
   public function testException();
+  /**
+   * @return string
+   * @throws \Xin\Thrift\MicroService\ThriftException
+   */
+  public function num();
+  /**
+   * @throws \Xin\Thrift\MicroService\ThriftException
+   */
+  public function redis();
 }
 
 
