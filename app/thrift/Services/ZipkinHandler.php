@@ -1,28 +1,24 @@
 <?php
 // +----------------------------------------------------------------------
-// | Test.php [ WE CAN DO IT JUST THINK IT ]
+// | ZipkinHandler.php [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2017 limingxinleo All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
 // +----------------------------------------------------------------------
-namespace App\Biz;
+namespace App\Thrift\Services;
 
-use Xin\Traits\Common\InstanceTrait;
+use Xin\Thrift\ZipkinService\ZipkinIf;
+use Xin\Thrift\ZipkinService\ZipkinException;
+use Xin\Thrift\ZipkinService\Options;
 
-class Test
+class ZipkinHandler extends Handler implements ZipkinIf
 {
-    use InstanceTrait;
-
-    public $num = 0;
-
-    public function num()
+    public function version(Options $options)
     {
-        return $this->num++;
+        $span = $options->span;
+        dump($span);
+        return $this->config->version;
     }
 
-    public function instanceCount()
-    {
-        return count(static::$_instances);
-    }
 }

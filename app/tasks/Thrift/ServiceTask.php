@@ -2,9 +2,11 @@
 
 namespace App\Tasks\Thrift;
 
+use App\Biz\Zipkin;
 use App\Core\Cli\Task\Socket;
 use App\Thrift\Clients\RegisterClient;
 use App\Thrift\Services\AppHandler;
+use App\Thrift\Services\ZipkinHandler;
 use App\Utils\Redis;
 use App\Utils\Register\Sign;
 use Phalcon\Logger\AdapterInterface;
@@ -18,6 +20,7 @@ use Thrift\TMultiplexedProcessor;
 use Thrift\Transport\TMemoryBuffer;
 use Xin\Thrift\Register\ServiceInfo;
 use swoole_process;
+use Xin\Thrift\ZipkinService\ZipkinProcessor;
 
 class ServiceTask extends Socket
 {
@@ -120,6 +123,7 @@ class ServiceTask extends Socket
         $this->processor = new TMultiplexedProcessor();
         $handler = new AppHandler();
         $this->processor->registerProcessor('app', new AppProcessor($handler));
+        $this->processor->registerProcessor('zipkin', new ZipkinProcessor(new ZipkinHandler()));
     }
 
     public function receive(swoole_server $server, $fd, $reactor_id, $data)

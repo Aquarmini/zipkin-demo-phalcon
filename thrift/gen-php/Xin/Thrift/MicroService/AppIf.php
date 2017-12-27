@@ -33,6 +33,11 @@ interface AppIf {
    */
   public function num();
   /**
+   * @return string
+   * @throws \Xin\Thrift\MicroService\ThriftException
+   */
+  public function num2();
+  /**
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
   public function redis();

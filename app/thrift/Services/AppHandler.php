@@ -9,6 +9,7 @@
 namespace App\Thrift\Services;
 
 use App\Biz\Test;
+use App\Biz\Zipkin;
 use App\Utils\Redis;
 use Xin\Thrift\MicroService\AppIf;
 use Xin\Thrift\MicroService\ThriftException;
@@ -44,9 +45,24 @@ class AppHandler extends Handler implements AppIf
         return Test::getInstance()->num();
     }
 
+    public function num2()
+    {
+        try {
+            $key = uniqid();
+            $client = Test::getInstance($key);
+            $num = $client->num();
+        } finally {
+            dump($client->instanceCount());
+            $client->flushInstance();
+        }
+
+        return $num;
+    }
+
     public function redis()
     {
         Redis::set('1', '1');
         Redis::select(2);
     }
+
 }

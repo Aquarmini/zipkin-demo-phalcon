@@ -16,6 +16,9 @@ service App {
     // 测试内存自增
     string num() throws (1:ThriftException ex)
 
+    // 解决自增问题
+    string num2() throws (1:ThriftException ex)
+
     // 判断redis db切换操作
     void redis() throws (1:ThriftException ex)
 }
