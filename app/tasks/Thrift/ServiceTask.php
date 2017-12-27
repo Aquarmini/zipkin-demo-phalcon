@@ -2,7 +2,6 @@
 
 namespace App\Tasks\Thrift;
 
-use App\Biz\Zipkin;
 use App\Core\Cli\Task\Socket;
 use App\Thrift\Clients\RegisterClient;
 use App\Thrift\Services\AppHandler;

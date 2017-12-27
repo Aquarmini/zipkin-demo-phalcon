@@ -9,7 +9,6 @@
 namespace App\Thrift\Services;
 
 use App\Biz\Test;
-use App\Biz\Zipkin;
 use App\Utils\Redis;
 use Xin\Thrift\MicroService\AppIf;
 use Xin\Thrift\MicroService\ThriftException;

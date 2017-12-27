@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
-use App\Biz\Zipkin;
 use App\Thrift\Clients\ZipkinClient;
 use Xin\Thrift\ZipkinService\ZipkinIf;
 use Xin\Thrift\ZipkinService\ZipkinException;
