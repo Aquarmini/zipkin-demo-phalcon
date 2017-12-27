@@ -10,6 +10,23 @@
 
 [wiki](https://github.com/limingxinleo/simple-subcontrollers.phalcon/wiki)
 
+## 测试
+- 安装Zipkin服务
+~~~
+docker run --name zipkin -d -p 9411:9411 openzipkin/zipkin 
+~~~
+
+- 启动RPC服务
+~~~
+php run thrift:service
+~~~
+
+- 调用测试命令
+~~~
+php run zipkin:test@zipkin
+~~~
+
+
 ## 安装
 1. 安装项目
 ~~~
