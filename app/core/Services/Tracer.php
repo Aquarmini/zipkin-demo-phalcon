@@ -22,7 +22,7 @@ class Tracer implements ServiceProviderInterface
     public function register(FactoryDefault $di, Config $config)
     {
         $di->setShared('tracer', function () use ($di) {
-            $endpoint = Endpoint::createFromGlobals();
+            $endpoint = Endpoint::create(env('APP_NAME'));
             $client = new Client();
             // Logger to stdout
             $logger = new \App\Common\Logger();
