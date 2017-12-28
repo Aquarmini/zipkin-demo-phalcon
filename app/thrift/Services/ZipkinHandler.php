@@ -27,4 +27,11 @@ class ZipkinHandler extends Handler implements ZipkinIf
         $version = $client->version($options);
         return $version;
     }
+
+    public function test3($name, Options $options)
+    {
+        $client = ZipkinClient::getInstance();
+        $version = $client->test($options);
+        return 'hi' . $name . ', you use ' . $version;
+    }
 }

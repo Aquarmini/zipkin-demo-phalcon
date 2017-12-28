@@ -135,6 +135,61 @@ class ZipkinClient implements \Xin\Thrift\ZipkinService\ZipkinIf {
     throw new \Exception("test failed: unknown result");
   }
 
+  public function test3($name, \Xin\Thrift\ZipkinService\Options $options)
+  {
+    $this->send_test3($name, $options);
+    return $this->recv_test3();
+  }
+
+  public function send_test3($name, \Xin\Thrift\ZipkinService\Options $options)
+  {
+    $args = new \Xin\Thrift\ZipkinService\Zipkin_test3_args();
+    $args->name = $name;
+    $args->options = $options;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'test3', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('test3', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_test3()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\ZipkinService\Zipkin_test3_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\ZipkinService\Zipkin_test3_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("test3 failed: unknown result");
+  }
+
 }
 
 

@@ -29,6 +29,13 @@ interface ZipkinIf {
    * @throws \Xin\Thrift\ZipkinService\ZipkinException
    */
   public function test(\Xin\Thrift\ZipkinService\Options $options);
+  /**
+   * @param string $name
+   * @param \Xin\Thrift\ZipkinService\Options $options
+   * @return string
+   * @throws \Xin\Thrift\ZipkinService\ZipkinException
+   */
+  public function test3($name, \Xin\Thrift\ZipkinService\Options $options);
 }
 
 

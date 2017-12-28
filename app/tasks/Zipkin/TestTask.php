@@ -29,7 +29,7 @@ class TestTask extends Task
     public function zipkinAction()
     {
         $client = ZipkinClient::getInstance();
-        echo $client->test();
+        echo $client->test3('limx');
     }
 
     public function numAction()

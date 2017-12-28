@@ -54,7 +54,6 @@ class ZipkinClient extends Client
             $trace->start();
             $context = $trace->getContext();
             $options = new Options();
-            $options->span = $spanName;
             $options->traceId = $context->getTraceId();
             $options->parentSpanId = $context->getParentId();
             $options->spanId = $context->getSpanId();
@@ -72,11 +71,17 @@ class ZipkinClient extends Client
         $trace = $tracer->newChild($context);
         $trace->setName($spanName);
         $trace->start();
+        $context = $trace->getContext();
+        $options = array_pop($arguments);
+        $options->traceId = $context->getTraceId();
+        $options->parentSpanId = $context->getParentId();
+        $options->spanId = $context->getSpanId();
+        $options->sampled = $context->isSampled();
+        $arguments[] = $options;
 
         try {
             $result = $this->client->$name(...$arguments);
         } finally {
-            $trace->finish();
             $tracer->flush();
         }
 
