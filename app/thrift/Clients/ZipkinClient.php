@@ -42,11 +42,13 @@ class ZipkinClient extends Client
         $tracing = di('tracer');
         $tracer = $tracing->getTracer();
 
-        $d = debug_backtrace()[1];
         $serviceName = env('APP_NAME');
-        $spanName = $serviceName . ':' . $d['class'] . '@' . $d['function'];
 
         if (!$options instanceof Options) {
+            // 首次调用
+            $d = debug_backtrace()[1];
+            $spanName = $serviceName . ':' . $d['class'] . '@' . $d['function'];
+
             $trace = $tracer->newTrace();
             $trace->setName($spanName);
             $trace->start();
@@ -58,17 +60,18 @@ class ZipkinClient extends Client
             $options->spanId = $context->getSpanId();
             $options->sampled = $context->isSampled();
             $arguments[] = $options;
-        } else {
-            $context = TraceContext::create(
-                $options->traceId,
-                $options->spanId,
-                $options->parentSpanId,
-                $options->sampled
-            );
-            $trace = $tracer->newChild($context);
-            $trace->setName($spanName);
-            $trace->start();
         }
+
+        $spanName = $serviceName . ':' . get_called_class() . '@' . $name;
+        $context = TraceContext::create(
+            $options->traceId,
+            $options->spanId,
+            $options->parentSpanId,
+            $options->sampled
+        );
+        $trace = $tracer->newChild($context);
+        $trace->setName($spanName);
+        $trace->start();
 
         try {
             $result = $this->client->$name(...$arguments);
