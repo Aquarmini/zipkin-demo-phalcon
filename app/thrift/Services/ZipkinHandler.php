@@ -32,6 +32,6 @@ class ZipkinHandler extends Handler implements ZipkinIf
     {
         $client = ZipkinClient::getInstance();
         $version = $client->test($options);
-        return 'hi' . $name . ', you use ' . $version;
+        return 'hi ' . $name . ', you are using thrift-phalcon-project ' . $version;
     }
 }

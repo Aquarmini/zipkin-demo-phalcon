@@ -49,10 +49,10 @@ class ZipkinClient extends Client
             $d = debug_backtrace()[1];
             $spanName = $serviceName . ':' . $d['class'] . '@' . $d['function'];
 
-            $trace = $tracer->newTrace();
-            $trace->setName($spanName);
-            $trace->start();
-            $context = $trace->getContext();
+            $trace1 = $tracer->newTrace();
+            $trace1->setName($spanName);
+            $trace1->start();
+            $context = $trace1->getContext();
             $options = new Options();
             $options->traceId = $context->getTraceId();
             $options->parentSpanId = $context->getParentId();
@@ -68,10 +68,10 @@ class ZipkinClient extends Client
             $options->parentSpanId,
             $options->sampled
         );
-        $trace = $tracer->newChild($context);
-        $trace->setName($spanName);
-        $trace->start();
-        $context = $trace->getContext();
+        $trace2 = $tracer->newChild($context);
+        $trace2->setName($spanName);
+        $trace2->start();
+        $context = $trace2->getContext();
         $options = array_pop($arguments);
         $options->traceId = $context->getTraceId();
         $options->parentSpanId = $context->getParentId();
@@ -82,6 +82,12 @@ class ZipkinClient extends Client
         try {
             $result = $this->client->$name(...$arguments);
         } finally {
+            if (isset($trace2)) {
+                $trace2->finish();
+            }
+            if (isset($trace1)) {
+                $trace1->finish();
+            }
             $tracer->flush();
         }
 
