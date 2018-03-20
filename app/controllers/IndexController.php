@@ -33,10 +33,9 @@ class IndexController extends Controller
         $this->view->version = System::getInstance()->version();
         return $this->view->render('index', 'index');
     }
-    
+
     public function exceptionAction()
     {
         throw new BizException(ErrorCode::$ENUM_SYSTEM_ERROR);
     }
 }
-

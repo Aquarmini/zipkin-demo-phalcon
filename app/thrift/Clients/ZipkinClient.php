@@ -92,4 +92,3 @@ class ZipkinClient extends Client
         return $result;
     }
 }
-

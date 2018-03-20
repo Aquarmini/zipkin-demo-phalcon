@@ -38,5 +38,4 @@ class Tracer implements ServiceProviderInterface
             return $tracing;
         });
     }
-
 }

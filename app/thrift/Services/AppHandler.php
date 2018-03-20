@@ -63,5 +63,4 @@ class AppHandler extends Handler implements AppIf
         Redis::set('1', '1');
         Redis::select(2);
     }
-
 }
