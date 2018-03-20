@@ -20,9 +20,9 @@ class ZipkinClient extends Client
 
     protected $clientName = ZipkinServiceClient::class;
 
-    protected $recvTimeoutMilliseconds = 50;
+    protected $recvTimeoutMilliseconds = 1000;
 
-    protected $sendTimeoutMilliseconds;
+    protected $sendTimeoutMilliseconds = 1000;
 
     /**
      * @desc
