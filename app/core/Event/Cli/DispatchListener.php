@@ -12,19 +12,10 @@ use Phalcon\Events\Event;
 use Exception;
 use Phalcon\Cli\Dispatcher;
 use Xin\Phalcon\Cli\Tasks\NotFindTask;
+use App\Core\Event\DispatchListener as Listener;
 
-class DispatchListener
+class DispatchListener extends Listener
 {
-    public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher)
-    {
-        // 在每一个找到的动作前执行
-    }
-
-    public function afterExecuteRoute(Event $event, Dispatcher $dispatcher)
-    {
-        // 在每一个找到的动作后执行
-    }
-
     public function beforeException(Event $event, Dispatcher $dispatcher, Exception $exception)
     {
         // 代替控制器或者动作不存在时的路径
@@ -45,7 +36,6 @@ class DispatchListener
      */
     protected function handleTaskNotFind(Event $event, Dispatcher $dispatcher, Exception $exception)
     {
-
         if (method_exists(NotFindTask::class, 'mainAction')) {
             $task = $dispatcher->getTaskName();
             $action = $dispatcher->getActionName();

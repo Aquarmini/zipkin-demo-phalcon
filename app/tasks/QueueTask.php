@@ -17,7 +17,7 @@ class QueueTask extends Queue
     protected $maxProcesses = 2;
 
     // 子进程最大循环处理次数
-    protected $processHandleMaxNumber = 100;
+    protected $processHandleMaxNumber = 10000;
 
     protected $errorKey = '';
 
@@ -105,4 +105,3 @@ class QueueTask extends Queue
         echo Color::success("失败的脚本已被清除！");
     }
 }
-

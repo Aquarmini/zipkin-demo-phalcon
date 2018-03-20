@@ -47,6 +47,8 @@ class InitTask extends Task
             'log' => $config->logDir,
             'meta' => $config->metaDataDir,
             'migrations' => $config->migrationsDir,
+            'lock' => $config->lockDir,
+            'pids' => $config->pidsDir,
         ];
         echo Color::head('仓库初始化') . PHP_EOL;
         foreach ($creatRoot as $i => $v) {
@@ -78,7 +80,6 @@ class InitTask extends Task
             file_get_contents(ROOT_PATH . '/.env')
         ));
         echo Color::success($key . " was successfully changed.");
-
     }
 
     private static function random($val)
@@ -103,5 +104,4 @@ class InitTask extends Task
         }
         return $res;
     }
-
 }
