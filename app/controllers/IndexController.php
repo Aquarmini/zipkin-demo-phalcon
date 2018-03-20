@@ -38,5 +38,4 @@ class IndexController extends Controller
     {
         throw new BizException(ErrorCode::$ENUM_SYSTEM_ERROR);
     }
-
 }
