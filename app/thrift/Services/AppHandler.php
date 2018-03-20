@@ -38,29 +38,4 @@ class AppHandler extends Handler implements AppIf
             'message' => '异常测试'
         ]);
     }
-
-    public function num()
-    {
-        return Test::getInstance()->num();
-    }
-
-    public function num2()
-    {
-        try {
-            $key = uniqid();
-            $client = Test::getInstance($key);
-            $num = $client->num();
-        } finally {
-            dump($client->instanceCount());
-            $client->flushInstance();
-        }
-
-        return $num;
-    }
-
-    public function redis()
-    {
-        Redis::set('1', '1');
-        Redis::select(2);
-    }
 }
